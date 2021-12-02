@@ -3,5 +3,12 @@
 version = 3
 
 [[package]]
-name = "advent_of_code_2021"
+name = "cli"
+version = "0.1.0"
+dependencies = [
+ "day-one",
+]
+
+[[package]]
+name = "day-one"
 version = "0.1.0"
