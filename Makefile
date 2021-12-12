@@ -25,7 +25,8 @@ dev: ## runs the development version of the CLI
 
 .PHONY: prod
 prod: ## runs the production version of the CLI
-	time cargo run --release -p cli
+	cargo build --release
+	time ./target/release/cli
 
 .PHONY: test
 test: ## runs tests
