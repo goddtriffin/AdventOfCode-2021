@@ -19,6 +19,14 @@ help: # Prints out help
 	done
 	@echo
 
+.PHONY: dev
+dev: ## runs the development version of the CLI
+	cargo run -p cli
+
+.PHONY: prod
+prod: ## runs the production version of the CLI
+	time cargo run --release -p cli
+
 .PHONY: test
 test: ## runs tests
-	cargo test
+	cargo test --no-fail-fast

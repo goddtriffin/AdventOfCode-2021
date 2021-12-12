@@ -1,8 +1,6 @@
+use day_one::day_one;
+use utils::lines_from_file;
+
 fn main() {
-    let num = 10;
-    println!(
-        "Hello, world! {} plus one is {}!",
-        num,
-        day_one::part_one(num)
-    );
+    day_one(lines_from_file("d1p1.txt").unwrap());
 }
