@@ -7,6 +7,6 @@ fn lines_from_file_success() {
             .iter_mut()
             .map(|s| s.to_string())
             .collect::<Vec<String>>(),
-        lines_from_file("d1p1-t1.txt").unwrap()
+        lines_from_file("d1t1.txt").unwrap()
     );
 }

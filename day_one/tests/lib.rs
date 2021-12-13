@@ -1,27 +1,46 @@
 use day_one::{part_one, part_two};
+use utils::lines_from_file;
 
 #[test]
-fn day_one_part_one() {
-    assert_eq!(
-        7,
-        part_one(
-            &vec!["199", "200", "208", "210", "200", "207", "240", "269", "260", "263"]
-                .iter_mut()
-                .map(|s| s.parse::<i32>().unwrap())
-                .collect()
-        )
-    );
+fn d1_p1_t1() {
+    let input = &lines_from_file("d1t1.txt")
+        .unwrap()
+        .iter()
+        .map(|s| s.parse::<i32>().unwrap())
+        .collect();
+
+    assert_eq!(7, part_one(&input));
 }
 
 #[test]
-fn day_one_part_two() {
-    assert_eq!(
-        5,
-        part_two(
-            &vec!["199", "200", "208", "210", "200", "207", "240", "269", "260", "263"]
-                .iter_mut()
-                .map(|s| s.parse::<i32>().unwrap())
-                .collect()
-        )
-    );
+fn d1_p1_real() {
+    let input = &lines_from_file("d1.txt")
+        .unwrap()
+        .iter()
+        .map(|s| s.parse::<i32>().unwrap())
+        .collect();
+
+    assert_eq!(1692, part_one(&input));
+}
+
+#[test]
+fn d1_p2_t1() {
+    let input = &lines_from_file("d1t1.txt")
+        .unwrap()
+        .iter()
+        .map(|s| s.parse::<i32>().unwrap())
+        .collect();
+
+    assert_eq!(5, part_two(&input));
+}
+
+#[test]
+fn d1_p2_real() {
+    let input = &lines_from_file("d1.txt")
+        .unwrap()
+        .iter()
+        .map(|s| s.parse::<i32>().unwrap())
+        .collect();
+
+    assert_eq!(1724, part_two(&input));
 }

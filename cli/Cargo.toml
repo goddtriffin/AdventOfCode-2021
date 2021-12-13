@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-day_one = { path = "../day_one" }
 utils = { path = "../utils" }
+day_one = { path = "../day_one" }
+day_two = { path = "../day_two" }
