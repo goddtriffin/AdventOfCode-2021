@@ -7,12 +7,20 @@ name = "cli"
 version = "0.1.0"
 dependencies = [
  "day_one",
+ "day_three",
  "day_two",
  "utils",
 ]
 
 [[package]]
 name = "day_one"
+version = "0.1.0"
+dependencies = [
+ "utils",
+]
+
+[[package]]
+name = "day_three"
 version = "0.1.0"
 dependencies = [
  "utils",

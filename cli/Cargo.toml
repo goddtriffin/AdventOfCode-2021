@@ -7,3 +7,4 @@ edition = "2021"
 utils = { path = "../utils" }
 day_one = { path = "../day_one" }
 day_two = { path = "../day_two" }
+day_three = { path = "../day_three" }
