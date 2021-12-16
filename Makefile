@@ -30,4 +30,4 @@ prod: ## runs the production version of the CLI
 
 .PHONY: test
 test: ## runs tests
-	cargo test
+	cargo test --release
