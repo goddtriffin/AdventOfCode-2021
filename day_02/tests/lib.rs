@@ -1,5 +1,5 @@
 use day_02::{command::Command, part_one, part_two, submarine::Submarine};
-use utils::lines_from_file;
+use utils::io::lines_from_file;
 
 #[test]
 fn d2_p1_t1() {

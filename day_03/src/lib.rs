@@ -1,3 +1,5 @@
+use utils::binary::{get_bit, set_bit};
+
 pub fn day_three(input: &Vec<String>) {
     let binary_size = input[0].len();
     let input: Vec<u16> = input
@@ -7,50 +9,114 @@ pub fn day_three(input: &Vec<String>) {
 
     println!("Day Three");
     println!("\tPart 1: {}", part_one(&input, &binary_size));
-    println!("\tPart 2: {}", part_two(&input));
+    println!("\tPart 2: {}", part_two(&input, &binary_size));
 }
 
 pub fn part_one(input: &Vec<u16>, binary_size: &usize) -> i32 {
-    let mut counter: [usize; 12] = [0; 12];
-    for num in input.iter() {
-        for i in 0..12 {
-            counter[11 - i] += usize::from(num >> i & 1);
-        }
-    }
-
-    let mut gamma_rate: u16 = 0;
-    for (index, count) in counter.iter().enumerate() {
-        let mask = 1 << (11 - index);
-
-        if *count >= input.len() / 2 {
-            gamma_rate |= mask;
-        }
-    }
-
-    let epsilon_rate = !gamma_rate << (16 - binary_size) >> (16 - binary_size);
-
-    i32::from(gamma_rate) * i32::from(epsilon_rate)
+    let gamma_rate = get_gamma_rate(input);
+    i32::from(gamma_rate) * i32::from(get_epsilon_rate(gamma_rate, binary_size))
 }
 
-pub fn part_two(input: &Vec<u16>) -> i32 {
-    println!("{}", get_most_occuring_bit(input, 1));
-    1
+pub fn part_two(input: &Vec<u16>, binary_size: &usize) -> i32 {
+    i32::from(get_oxygen_generator_rating(input))
+        * i32::from(get_co2_scrubber_rating(input, binary_size))
 }
 
-fn get_most_occuring_bit(input: &Vec<u16>, bit_offset: u16) -> u16 {
+pub fn get_most_occurring_bit(input: &Vec<u16>, bit_offset: u16) -> u16 {
+    if bit_offset < 1 {
+        panic!(
+            "Smallest bit_offset index is 1 - bit_offset {} was attempted",
+            bit_offset
+        );
+    }
+    if bit_offset > 16 {
+        panic!(
+            "Maximum u16 size is 16 bits long - bit_offset {} was attempted",
+            bit_offset
+        );
+    }
+
     let mut count_1s = 0;
     for num in input.iter() {
-        print_binary(*num);
-        println!("New count: {}", count_1s);
-        count_1s += num >> bit_offset & 1;
+        count_1s += get_bit(*num, bit_offset);
     }
-    count_1s
+
+    let fraction = f64::from(u16::try_from(input.len()).unwrap()) / f64::from(2);
+    if f64::from(count_1s) >= fraction {
+        1
+    } else {
+        0
+    }
 }
 
-fn print_binary(num: u16) {
-    print!("{}:\t", num);
-    for i in 0..16 {
-        print!("{}", num >> (15 - i) & 1);
+pub fn get_gamma_rate(input: &Vec<u16>) -> u16 {
+    let mut gamma_rate: u16 = 0;
+    // we only care about 12 bits, not the entire u16
+    for bit_offset in 1u16..13 {
+        if get_most_occurring_bit(input, bit_offset) == 1u16 {
+            gamma_rate = set_bit(gamma_rate, bit_offset, true);
+        } else {
+            gamma_rate = set_bit(gamma_rate, bit_offset, false);
+        }
     }
-    println!();
+    gamma_rate
+}
+
+pub fn get_epsilon_rate(gamma_rate: u16, binary_size: &usize) -> u16 {
+    // literally just the inverse
+    let epsilon_rate = !gamma_rate;
+    // have to wipe out the extra bits, since we're using u16 to represent 12 bits
+    let epsilon_rate = epsilon_rate << (16 - binary_size) >> (16 - binary_size);
+    epsilon_rate
+}
+
+pub fn filter_by_most_common(input: &Vec<u16>, bit_offset: u16) -> Vec<u16> {
+    let most_occurring_bit = get_most_occurring_bit(input, bit_offset);
+    let input = input
+        .iter()
+        .filter_map(|num| {
+            if get_bit(*num, bit_offset) == most_occurring_bit {
+                Some(*num)
+            } else {
+                None
+            }
+        })
+        .collect();
+    input
+}
+
+pub fn filter_by_least_common(input: &Vec<u16>, bit_offset: u16) -> Vec<u16> {
+    let most_occurring_bit = get_most_occurring_bit(input, bit_offset);
+    let least_occurring_bit = if most_occurring_bit == 1 { 0 } else { 1 };
+    let input = input
+        .iter()
+        .filter_map(|num| {
+            if get_bit(*num, bit_offset) == least_occurring_bit {
+                Some(*num)
+            } else {
+                None
+            }
+        })
+        .collect();
+    input
+}
+
+pub fn get_oxygen_generator_rating(input: &Vec<u16>) -> u16 {
+    let mut input_remaining = input.clone();
+    let mut bit_offset = 12;
+    while input_remaining.len() != 1 {
+        input_remaining = filter_by_most_common(&input_remaining, bit_offset);
+        bit_offset -= 1;
+    }
+    *input_remaining.get(0).unwrap()
+}
+
+pub fn get_co2_scrubber_rating(input: &Vec<u16>, binary_size: &usize) -> u16 {
+    let mut input_remaining = input.clone();
+    let mut bit_offset = u16::try_from(*binary_size).unwrap();
+    while input_remaining.len() != 1 {
+        input_remaining = filter_by_least_common(&input_remaining, bit_offset);
+        bit_offset -= 1;
+    }
+    *input_remaining.get(0).unwrap()
 }

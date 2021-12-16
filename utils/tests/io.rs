@@ -1,4 +1,4 @@
-use utils::lines_from_file;
+use utils::io::lines_from_file;
 
 #[test]
 fn lines_from_file_success() {

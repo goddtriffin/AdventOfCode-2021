@@ -1,5 +1,5 @@
 use day_01::{part_one, part_two};
-use utils::lines_from_file;
+use utils::io::lines_from_file;
 
 #[test]
 fn d1_p1_t1() {
