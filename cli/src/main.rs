@@ -1,6 +1,6 @@
-use day_one::day_one;
-use day_three::day_three;
-use day_two::day_two;
+use day_01::day_one;
+use day_02::day_two;
+use day_03::day_three;
 use utils::lines_from_file;
 
 fn main() {

@@ -5,6 +5,6 @@ edition = "2021"
 
 [dependencies]
 utils = { path = "../utils" }
-day_one = { path = "../day_one" }
-day_two = { path = "../day_two" }
-day_three = { path = "../day_three" }
+day_01 = { path = "../day_01" }
+day_02 = { path = "../day_02" }
+day_03 = { path = "../day_03" }

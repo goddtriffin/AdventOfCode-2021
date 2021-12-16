@@ -1,4 +1,4 @@
-use day_one::{part_one, part_two};
+use day_01::{part_one, part_two};
 use utils::lines_from_file;
 
 #[test]

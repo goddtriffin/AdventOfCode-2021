@@ -1,4 +1,4 @@
-use day_two::{command::Command, part_one, part_two, submarine::Submarine};
+use day_02::{command::Command, part_one, part_two, submarine::Submarine};
 use utils::lines_from_file;
 
 #[test]

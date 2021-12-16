@@ -6,28 +6,28 @@ version = 3
 name = "cli"
 version = "0.1.0"
 dependencies = [
- "day_one",
- "day_three",
- "day_two",
+ "day_01",
+ "day_02",
+ "day_03",
  "utils",
 ]
 
 [[package]]
-name = "day_one"
+name = "day_01"
 version = "0.1.0"
 dependencies = [
  "utils",
 ]
 
 [[package]]
-name = "day_three"
+name = "day_02"
 version = "0.1.0"
 dependencies = [
  "utils",
 ]
 
 [[package]]
-name = "day_two"
+name = "day_03"
 version = "0.1.0"
 dependencies = [
  "utils",
