@@ -28,7 +28,7 @@ impl BingoGame {
         }
     }
 
-    pub fn play(&mut self) -> Option<usize> {
+    pub fn play_to_win(&mut self) -> Option<usize> {
         for drawn_number in self.drawn_numbers.iter() {
             for board in self.boards.iter_mut() {
                 board.mark(*drawn_number);
@@ -43,6 +43,37 @@ impl BingoGame {
         }
 
         None
+    }
+
+    pub fn play_to_lose(&mut self) -> Option<usize> {
+        let mut most_recent_win_drawn_number = 0;
+        let mut most_recent_win_score = 0;
+
+        for drawn_number in self.drawn_numbers.iter() {
+            for board in self.boards.iter_mut() {
+                if board.final_score != 0 {
+                    continue;
+                }
+
+                board.mark(*drawn_number);
+
+                match board.check_win() {
+                    Some(score) => {
+                        most_recent_win_drawn_number = *drawn_number;
+                        most_recent_win_score = score;
+                    }
+                    None => (),
+                }
+            }
+        }
+
+        Some(most_recent_win_drawn_number * most_recent_win_score)
+    }
+
+    pub fn reset_boards(&mut self) {
+        for board in self.boards.iter_mut() {
+            board.reset();
+        }
     }
 }
 

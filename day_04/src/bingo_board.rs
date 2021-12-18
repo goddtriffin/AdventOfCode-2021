@@ -5,6 +5,8 @@ pub struct BingoBoard {
     pub marked: Vec<bool>,
     pub width: usize,
     pub height: usize,
+
+    pub final_score: usize,
 }
 
 impl BingoBoard {
@@ -34,6 +36,7 @@ impl BingoBoard {
             marked,
             width,
             height,
+            final_score: 0,
         }
     }
 
@@ -49,7 +52,7 @@ impl BingoBoard {
     }
 
     /// if win is found, the returned usize is the sum of all unmarked numbers on the board
-    pub fn check_win(&self) -> Option<usize> {
+    pub fn check_win(&mut self) -> Option<usize> {
         match self.check_horizontal_win() {
             Some(score) => {
                 return Some(score);
@@ -68,7 +71,7 @@ impl BingoBoard {
     }
 
     /// if win is found, the returned usize is the sum of all unmarked numbers on the board
-    fn check_horizontal_win(&self) -> Option<usize> {
+    fn check_horizontal_win(&mut self) -> Option<usize> {
         for y in 0..self.height {
             let mut found = true;
             for x in 0..self.width {
@@ -80,7 +83,8 @@ impl BingoBoard {
             }
 
             if found {
-                return Some(self.unmarked_sum());
+                self.final_score = self.unmarked_sum();
+                return Some(self.final_score);
             }
         }
 
@@ -88,7 +92,7 @@ impl BingoBoard {
     }
 
     /// if win is found, the returned usize is the sum of all unmarked numbers on the board
-    fn check_vertical_win(&self) -> Option<usize> {
+    fn check_vertical_win(&mut self) -> Option<usize> {
         for x in 0..self.width {
             let mut found = true;
             for y in 0..self.height {
@@ -100,7 +104,8 @@ impl BingoBoard {
             }
 
             if found {
-                return Some(self.unmarked_sum());
+                self.final_score = self.unmarked_sum();
+                return Some(self.final_score);
             }
         }
 
@@ -123,6 +128,11 @@ impl BingoBoard {
 
     fn generate_index(&self, y: usize, x: usize) -> usize {
         (y * self.width) + x
+    }
+
+    pub fn reset(&mut self) {
+        self.marked = vec![];
+        self.marked.resize(self.height * self.width, false);
     }
 }
 
