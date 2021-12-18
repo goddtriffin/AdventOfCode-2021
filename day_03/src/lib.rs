@@ -1,13 +1,13 @@
 use utils::binary::{get_bit, set_bit};
 
-pub fn day_three(input: &Vec<String>) {
+pub fn day_03(input: &Vec<String>) {
     let binary_size = input[0].len();
     let input: Vec<u16> = input
         .iter()
         .map(|s| u16::from_str_radix(s, 2).unwrap())
         .collect();
 
-    println!("Day Three");
+    println!("Day 03");
     println!("\tPart 1: {}", part_one(&input, &binary_size));
     println!("\tPart 2: {}", part_two(&input, &binary_size));
 }

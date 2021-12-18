@@ -1,7 +1,7 @@
-pub fn day_one(input: &Vec<String>) {
+pub fn day_01(input: &Vec<String>) {
     let input: Vec<i32> = input.iter().map(|s| s.parse::<i32>().unwrap()).collect();
 
-    println!("Day One");
+    println!("Day 01");
     println!("\tPart 1: {}", part_one(&input));
     println!("\tPart 2: {}", part_two(&input));
 }

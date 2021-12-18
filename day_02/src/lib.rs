@@ -5,7 +5,7 @@ use crate::command::Command;
 pub mod command;
 pub mod submarine;
 
-pub fn day_two(input: &Vec<String>) {
+pub fn day_02(input: &Vec<String>) {
     // setup
     let input: &Vec<Command> = &input
         .iter()
@@ -15,7 +15,7 @@ pub fn day_two(input: &Vec<String>) {
     submarine.travel(input);
 
     // solutions
-    println!("Day Two");
+    println!("Day 02");
     println!("\tPart 1: {}", part_one(&submarine));
     println!("\tPart 2: {}", part_two(&submarine));
 }
