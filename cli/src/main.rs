@@ -4,6 +4,7 @@ use day_03::day_03;
 use day_04::day_04;
 use day_05::day_05;
 use day_06::day_06;
+use day_07::day_07;
 use utils::io::lines_from_file;
 
 fn main() {
@@ -13,4 +14,5 @@ fn main() {
     day_04(&lines_from_file("d4.txt").unwrap());
     day_05(&lines_from_file("d5.txt").unwrap());
     day_06(&lines_from_file("d6.txt").unwrap());
+    day_07(&lines_from_file("d7.txt").unwrap());
 }
