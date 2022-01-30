@@ -1,4 +1,4 @@
-use std::{fmt, str::FromStr};
+use std::{cmp::Ordering, fmt, str::FromStr};
 
 pub struct Entry {
     pub unique_signal_patterns: Vec<String>,
@@ -47,8 +47,30 @@ impl FromStr for Entry {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let split: Vec<&str> = s.split("|").collect();
-        let unique_signal_patterns: Vec<String> =
-            split[0].split(" ").map(|s| s.to_string()).collect();
+
+        // unique signal patterns
+        let mut unique_signal_patterns: Vec<String> = split[0]
+            .split(" ")
+            .filter_map(|s| {
+                if s.len() < 1 {
+                    // for some reason there is a blank string
+                    return None;
+                }
+
+                Some(s.to_string())
+            })
+            .collect();
+        unique_signal_patterns.sort_by(|a, b| {
+            if a.len() < b.len() {
+                Ordering::Less
+            } else if a.len() == b.len() {
+                Ordering::Equal
+            } else {
+                Ordering::Greater
+            }
+        });
+
+        // output value
         let output_value: Vec<String> = split[1].split(" ").map(|s| s.to_string()).collect();
 
         Ok(Entry {
@@ -64,7 +86,7 @@ impl fmt::Display for Entry {
 
         builder.push_str(
             format!(
-                "{}|{}\n",
+                "{} |{}",
                 self.unique_signal_patterns.join(" "),
                 self.output_value.join(" ")
             )
